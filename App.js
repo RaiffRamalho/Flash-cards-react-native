@@ -1,21 +1,36 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import { View, StatusBar } from 'react-native'
+import TabsNav from './components/TabsNav'
+import { createAppContainer, createStackNavigator } from 'react-navigation'
+import { purple } from './utils/colors'
+import { Constants } from 'expo'
+
+
+function UdaciStatusBar ({backgroundColor, ...props}) {
+  return (
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  )
+}
+
+const MainNavigator = createAppContainer(createStackNavigator({
+  home: {
+    screen: TabsNav,
+    navigationOptions: {
+      header: null,
+    },
+  },
+  
+}));
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
+      <View style={{flex: 1}}>
+          <UdaciStatusBar backgroundColor={purple} barStyle="light-content" />
+          <MainNavigator  />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
