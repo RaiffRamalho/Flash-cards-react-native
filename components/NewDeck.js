@@ -13,28 +13,32 @@ import { purple, white } from '../utils/colors'
 class NewDeck extends Component {
   constructor(props) {
     super(props);
-    this.state = { text: 'title' };
+    this.state = { title: 'title' };
   }
 
   create = () => {
     console.log("submit")
+    this.props.navigation.navigate(
+      'Deck',
+    )
   };
 
   render() {
     return (
       <View style={styles.container}>
         <Text>Title</Text>
-          <TextInput
-          style={{height: 40, width:200, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(text) => this.setState({text})}
-          value={this.state.text}
-          />
-         <TouchableOpacity
-            style={
-              Platform.OS === "ios" ? styles.iosSubmitBtn : styles.AndroidSubmitBtn
-            }
-            onPress={this.create}
-          >
+        <TextInput
+        style={{height: 40, width:200, borderColor: 'gray', borderWidth: 1}}
+        onChangeText={(title) => this.setState({title})}
+        value={this.state.title}
+        />
+        <Text></Text>        
+        <TouchableOpacity
+          style={
+            Platform.OS === "ios" ? styles.iosCreateBtn : styles.AndroidCreateBtn
+          }
+          onPress={this.create}
+        >
           <Text style={styles.createBtnText}>Create</Text>
         </TouchableOpacity>
       </View>
@@ -48,7 +52,7 @@ const styles = StyleSheet.create({
     padding: 15,
     alignItems: "center"
   },
-  iosSubmitBtn: {
+  iosCreateBtn: {
     backgroundColor: purple,
     padding: 10,
     borderRadius: 7,
@@ -56,7 +60,7 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginRight: 40
   },
-  AndroidSubmitBtn: {
+  AndroidCreateBtn: {
     backgroundColor: purple,
     padding: 10,
     paddingLeft: 30,

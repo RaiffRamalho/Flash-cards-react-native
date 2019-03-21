@@ -1,6 +1,10 @@
-
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, FlatList } from 'react-native'
+import { 
+  View, 
+  StyleSheet, 
+  Text, 
+  FlatList, 
+  TouchableOpacity } from 'react-native'
 import { lightPurp } from '../utils/colors'
 
 
@@ -22,12 +26,19 @@ class DeckList extends Component {
             },
           ]}
           renderItem={({item}) =>
+          <TouchableOpacity 
+            onPress={() => this.props.navigation.navigate(
+              'Deck',
+              item
+            )}
+            >
             <View style={styles.item}> 
               <Text>{item.title}</Text>
               <Text>{item.cards} Cards</Text>
             </View>
+         
+          </TouchableOpacity>}
           
-          }
         />
       </View>
     )
