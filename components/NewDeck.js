@@ -8,18 +8,21 @@ import {
   TouchableOpacity, 
   Platform } from 'react-native'
 import { purple, white } from '../utils/colors'
+import { saveDeckTitle } from '../utils/api'
+import { FLASH_CARDS_STORAGE_KEY } from '../utils/constants'
 
 
 class NewDeck extends Component {
   constructor(props) {
     super(props);
-    this.state = { title: 'title' };
+    this.state = { title: 'Title' };
   }
 
   create = () => {
-    console.log("submit")
+    saveDeckTitle({ key: this.state.title })
     this.props.navigation.navigate(
       'Deck',
+      {key: this.state.title}
     )
   };
 
