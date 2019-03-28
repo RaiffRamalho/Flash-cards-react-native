@@ -75,10 +75,10 @@ class DeckList extends Component {
 }
 
 
-function mapStateToProps (state) {  
-  console.log(state)
+function mapStateToProps ({decks}) {  
+  
   return {
-    data: Object.values(state)
+    data: Object.values(decks)
   }
 }
 
