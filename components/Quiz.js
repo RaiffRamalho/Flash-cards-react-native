@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, Platform } from 'react-native'
-import { purple, white, red, green } from '../utils/colors'
+import { purple, white } from '../utils/colors'
 
 
 class Quiz extends Component {
@@ -12,9 +12,7 @@ class Quiz extends Component {
     )
   };
 
-  submitAnswer = () => {
-    console.log("submit")
-  };
+  
 
   render() {
     return (
@@ -29,24 +27,8 @@ class Quiz extends Component {
         >
           <Text style={styles.btnShowText}>Show Answer</Text>
         </TouchableOpacity>
-        <Text></Text>
-        <TouchableOpacity
-          style={
-            Platform.OS === "ios" ? styles.iosCorrectBtn : styles.AndroidCorrectBtn
-          }
-          onPress={this.submitAnswer}
-        >
-          <Text style={styles.btnText}>Corret</Text>
-        </TouchableOpacity>
-        <Text></Text>
-        <TouchableOpacity
-          style={
-            Platform.OS === "ios" ? styles.iosIncorrectBtn : styles.AndroidIncorrectBtn
-          }
-          onPress={this.submitAnswer}
-        >
-          <Text style={styles.btnText}>Incorret</Text>
-        </TouchableOpacity>
+        
+        
       </View>
     )
   }
@@ -74,44 +56,6 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     justifyContent: "center",
     alignItems: "center"
-  },iosCorrectBtn: {
-    backgroundColor: green,
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40
-  }, AndroidCorrectBtn: {
-    backgroundColor: green,
-    padding: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
-    height: 45,
-    borderRadius: 2,
-    justifyContent: "center",
-    alignItems: "center"
-  },iosIncorrectBtn: {
-    backgroundColor: red,
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40
-  },
-  AndroidIncorrectBtn: {
-    backgroundColor: red,
-    padding: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
-    height: 45,
-    borderRadius: 2,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  btnText: {
-    color: white,
-    fontSize: 22,
-    textAlign: "center"
   },
   btnShowText: {
     color: white,

@@ -9,20 +9,34 @@ import {
   Platform } from 'react-native'
 import { purple, white } from '../utils/colors'
 import { saveDeckTitle } from '../utils/api'
-import { FLASH_CARDS_STORAGE_KEY } from '../utils/constants'
+
+import { connect } from 'react-redux'
+import { addDeck } from '../actions'
 
 
 class NewDeck extends Component {
   constructor(props) {
     super(props);
-    this.state = { title: 'Title' };
+    this.state = { 
+      title: 'Title',
+      question: []
+    };
   }
 
   create = () => {
+
+    const key = this.state.title;
+    const deck = this.state;
+
+    this.props.dispatch(addDeck({
+      [key]: deck
+    }))
+
     saveDeckTitle({ key: this.state.title })
+
     this.props.navigation.navigate(
       'Deck',
-      {key: this.state.title}
+      {keyID: this.state.title}
     )
   };
 
@@ -80,4 +94,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default NewDeck;
+export default connect()(NewDeck);

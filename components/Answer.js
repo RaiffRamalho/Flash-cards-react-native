@@ -1,21 +1,37 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, Platform } from 'react-native'
-import { purple, white } from '../utils/colors'
+import { purple, white, red, green } from '../utils/colors'
 
 
 class Answer extends Component {
+
+  submitAnswer = () => {
+    console.log("submit")
+    this.props.navigation.goBack()
+  };
 
   render() {
     return (
       <View style={styles.container}> 
         <Text>The answer is: Answer</Text>
+        
+        <Text></Text>
         <TouchableOpacity
-            style={
-              Platform.OS === "ios" ? styles.iosBtn : styles.AndroidBtn
-            }
-            onPress={() => this.props.navigation.goBack()}
-          >
-          <Text style={styles.btnText}>Quiz</Text>
+          style={
+            Platform.OS === "ios" ? styles.iosCorrectBtn : styles.AndroidCorrectBtn
+          }
+          onPress={this.submitAnswer}
+        >
+          <Text style={styles.btnText}>Corret</Text>
+        </TouchableOpacity>
+        <Text></Text>
+        <TouchableOpacity
+          style={
+            Platform.OS === "ios" ? styles.iosIncorrectBtn : styles.AndroidIncorrectBtn
+          }
+          onPress={this.submitAnswer}
+        >
+          <Text style={styles.btnText}>Incorret</Text>
         </TouchableOpacity>
       </View>
     )
@@ -41,6 +57,42 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
     paddingRight: 30,
     height: 35,
+    borderRadius: 2,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  iosCorrectBtn: {
+    backgroundColor: green,
+    padding: 10,
+    borderRadius: 7,
+    height: 45,
+    marginLeft: 40,
+    marginRight: 40
+  },
+  AndroidCorrectBtn: {
+    backgroundColor: green,
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    height: 45,
+    borderRadius: 2,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  iosIncorrectBtn: {
+    backgroundColor: red,
+    padding: 10,
+    borderRadius: 7,
+    height: 45,
+    marginLeft: 40,
+    marginRight: 40
+  },
+  AndroidIncorrectBtn: {
+    backgroundColor: red,
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    height: 45,
     borderRadius: 2,
     justifyContent: "center",
     alignItems: "center"

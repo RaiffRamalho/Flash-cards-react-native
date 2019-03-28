@@ -4,8 +4,18 @@ import { purple, white } from '../utils/colors'
 
 
 class Deck extends Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = { 
+      data: []
+    };
+  }
 
   render() {
+
+    // const itemId = navigation.getParam('key', 'NO-KEY');
+
     return (
       <View style={styles.container}>
           

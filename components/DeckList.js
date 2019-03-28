@@ -9,55 +9,58 @@ import {
 import { lightPurp, purple, white } from '../utils/colors'
 import { getDecks, cleanStorage } from '../utils/api'
 
+import { connect } from 'react-redux'
+import { receiveDecks, removeDecks } from '../actions'
+
+
 class DeckList extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      data: []
+      data: [{  
+        title: "no",
+        questions: []
+      }]
     };
   }
 
   componentDidMount () {
     getDecks().then(result => {
-      console.log("result", result)
       let newData = result ? Object.values(result) : []
-      this.setState({data: newData})
-    });
-  }
-
-  componentWillUpdate(){
-    console.log("will update")
-    getDecks().then(result => {
-      console.log("result", result)
-      let newData = result ? Object.values(result) : []
-      this.setState({data: newData})
+      
+      this.props.dispatch(receiveDecks(newData))
     });
   }
 
   cleanStorage = () => {
     cleanStorage();
+    this.props.dispatch(removeDecks())
   };
 
   render() {
     
+    const { data } = this.props;
+
     return (
       <View style={styles.container}>
+
         <FlatList
-          data={this.state.data}
+          data={data.length > 0 ? data : this.state.data}
           renderItem={({item}) =>
           <TouchableOpacity 
-            onPress={() => this.props.navigation.navigate(
-              'Deck',
-              item
+          onPress={() => this.props.navigation.navigate(
+            'Deck',
+            item
             )}
             >
+            
             <View style={styles.item}> 
               <Text>{item.title}</Text>
               <Text>{item.questions.length} Cards</Text>
             </View>
           </TouchableOpacity>}
         />
-
+      
         <TouchableOpacity
           style={
             Platform.OS === "ios" ? styles.iosCleanBtn : styles.AndroidCleanBtn
@@ -70,6 +73,15 @@ class DeckList extends Component {
     )
   }
 }
+
+
+function mapStateToProps (state) {  
+  console.log(state)
+  return {
+    data: Object.values(state)
+  }
+}
+
 
 const styles = StyleSheet.create({
   container: {
@@ -110,4 +122,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export default DeckList;
+
+export default connect(
+  mapStateToProps
+)(DeckList) 

@@ -9,6 +9,10 @@ import { createAppContainer, createStackNavigator } from 'react-navigation'
 import { purple, white } from './utils/colors'
 import { Constants } from 'expo'
 
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import reducer from './reducers'
+
 
 function UdaciStatusBar ({backgroundColor, ...props}) {
   return (
@@ -70,10 +74,12 @@ const MainNavigator = createAppContainer(createStackNavigator({
 export default class App extends React.Component {
   render() {
     return (
-      <View style={{flex: 1}}>
-          <UdaciStatusBar backgroundColor={purple} barStyle="light-content" />
-          <MainNavigator  />
-      </View>
+      <Provider store={createStore(reducer)}>
+        <View style={{flex: 1}}>
+            <UdaciStatusBar backgroundColor={purple} barStyle="light-content" />
+            <MainNavigator  />
+        </View>
+      </Provider>
     );
   }
 }
