@@ -2,6 +2,12 @@ import React, { Component } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, Platform, TextInput } from 'react-native'
 import { purple, white } from '../utils/colors'
 
+import { connect } from 'react-redux'
+import { addCard} from '../actions/cards'
+
+import { addCardToDeck } from '../utils/api'
+
+
 
 class NewCard extends Component {
   constructor(props) {
@@ -13,9 +19,27 @@ class NewCard extends Component {
   }
 
   create = () => {
-    console.log("submit")
+    
+    const {question, answer} = this.state
+    const { keyID } = this.props.navigation.state.params
+
+    addCardToDeck({
+      deckID: keyID,
+      question: question,
+      answer: answer,
+    })
+
+    this.props.dispatch(addCard({
+      deckID: keyID,
+      question: question,
+      answer: answer,
+    }))
+
     this.props.navigation.navigate(
       'Deck',
+      {
+        keyID: keyID
+      }
     )
   };
 
@@ -81,4 +105,15 @@ const styles = StyleSheet.create({
   
 })
 
-export default NewCard;
+function mapStateToProps (state, { navigation }) {
+  // const {decks} = state;
+  // const { keyID } = navigation.state.params
+  return {
+    // deck: Object.values(decks).filter((deck) => (
+    //   deck.title === keyID
+    // )),
+
+  }
+}
+
+export default connect()(NewCard);

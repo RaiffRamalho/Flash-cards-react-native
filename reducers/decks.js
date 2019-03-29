@@ -1,4 +1,4 @@
-import { RECEIVE_DECKS, ADD_DECK, REMOVE_DECKS } from '../actions'
+import { RECEIVE_DECKS, ADD_DECK, REMOVE_DECKS } from '../actions/decks'
 
 export default function decks (state = {}, action) {
   switch (action.type) {

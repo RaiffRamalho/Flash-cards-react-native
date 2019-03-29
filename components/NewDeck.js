@@ -11,7 +11,7 @@ import { purple, white } from '../utils/colors'
 import { saveDeckTitle } from '../utils/api'
 
 import { connect } from 'react-redux'
-import { addDeck } from '../actions'
+import { addDeck } from '../actions/decks'
 
 
 class NewDeck extends Component {
@@ -19,7 +19,7 @@ class NewDeck extends Component {
     super(props);
     this.state = { 
       title: 'Title',
-      question: []
+      questions: []
     };
   }
 

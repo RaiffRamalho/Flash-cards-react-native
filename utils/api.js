@@ -18,6 +18,14 @@ export function saveDeckTitle ({ key }){
     }
   }))
 }
+export function addCardToDeck ({ deckID, question, answer }){
+  return AsyncStorage.mergeItem(FLASH_CARDS_STORAGE_KEY, JSON.stringify({
+    [deckID+question]: {
+      question: question,
+      answer: answer,
+    }
+  }))
+}
 
 export function cleanStorage(){
   return AsyncStorage.clear(result => result)

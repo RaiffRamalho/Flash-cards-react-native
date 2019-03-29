@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, Platform } from 'react-native'
 import { purple, white } from '../utils/colors'
 
+import { connect } from 'react-redux'
+
+
 
 class Deck extends Component {
   
@@ -14,13 +17,14 @@ class Deck extends Component {
 
   render() {
 
-    // const itemId = navigation.getParam('key', 'NO-KEY');
+    const {deck, cards} = this.props;
+    console.log(cards)
 
     return (
       <View style={styles.container}>
           
-        <Text>Deck 1</Text>
-        <Text>3 Cards</Text>
+        <Text>{deck.title}</Text>
+        <Text>{cards ? cards.length : []} Cards</Text>
             
         <TouchableOpacity
             style={
@@ -28,6 +32,7 @@ class Deck extends Component {
             }
             onPress={() => this.props.navigation.navigate(
               'Quiz',
+              {deck: deck}
             )}
           >
           <Text style={styles.btnText}>Quiz</Text>
@@ -39,6 +44,7 @@ class Deck extends Component {
             }
             onPress={() => this.props.navigation.navigate(
               'NewCard',
+              {keyID: deck.title}
             )}
           >
           <Text style={styles.btnText}>Add Card</Text>
@@ -79,4 +85,19 @@ const styles = StyleSheet.create({
   
 })
 
-export default Deck;
+
+function mapStateToProps (state, { navigation }) {
+  const {decks, cards} = state
+  const { keyID } = navigation.state.params
+  // console.log(cards)
+  // console.log(keyID)
+  // console.log(cards[keyID])
+  return {
+    deck: Object.values(decks).filter((deck) => (
+      deck.title === keyID
+    ))[0],
+    cards: cards[keyID]
+  }
+}
+
+export default connect(mapStateToProps)(Deck);

@@ -10,7 +10,7 @@ import { lightPurp, purple, white } from '../utils/colors'
 import { getDecks, cleanStorage } from '../utils/api'
 
 import { connect } from 'react-redux'
-import { receiveDecks, removeDecks } from '../actions'
+import { receiveDecks, removeDecks } from '../actions/decks'
 
 
 class DeckList extends Component {
@@ -45,12 +45,14 @@ class DeckList extends Component {
       <View style={styles.container}>
 
         <FlatList
-          data={data.length > 0 ? data : this.state.data}
+          data={data}
           renderItem={({item}) =>
           <TouchableOpacity 
           onPress={() => this.props.navigation.navigate(
             'Deck',
-            item
+            {
+              keyID : item.title
+            }
             )}
             >
             
