@@ -6,7 +6,6 @@ import { purple, white, red, green } from '../utils/colors'
 class Answer extends Component {
 
   submitAnswer = () => {
-    console.log("submit")
     this.props.navigation.goBack()
   };
 

@@ -11,7 +11,7 @@ import { purple, white } from '../utils/colors'
 import { saveDeckTitle } from '../utils/api'
 
 import { connect } from 'react-redux'
-import { addDeck } from '../actions/decks'
+import { addDeck } from '../actions'
 
 
 class NewDeck extends Component {

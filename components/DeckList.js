@@ -10,7 +10,7 @@ import { lightPurp, purple, white } from '../utils/colors'
 import { getDecks, cleanStorage } from '../utils/api'
 
 import { connect } from 'react-redux'
-import { receiveDecks, removeDecks } from '../actions/decks'
+import { receiveDecks, removeDecks } from '../actions'
 
 
 class DeckList extends Component {
@@ -25,12 +25,12 @@ class DeckList extends Component {
   }
 
   componentDidMount () {
+    // cleanStorage();
     getDecks().then(result => {
-      let newData = result ? Object.values(result) : []
-      
-      this.props.dispatch(receiveDecks(newData))
+      this.props.dispatch(receiveDecks(result))
     });
   }
+
 
   cleanStorage = () => {
     cleanStorage();
@@ -50,9 +50,7 @@ class DeckList extends Component {
           <TouchableOpacity 
           onPress={() => this.props.navigation.navigate(
             'Deck',
-            {
-              keyID : item.title
-            }
+            { keyID : item.title }
             )}
             >
             
@@ -78,9 +76,9 @@ class DeckList extends Component {
 
 
 function mapStateToProps ({decks}) {  
-  
+  // console.log(decks)
   return {
-    data: Object.values(decks)
+    data: decks ? Object.values(decks) : []
   }
 }
 

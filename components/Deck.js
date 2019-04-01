@@ -4,8 +4,6 @@ import { purple, white } from '../utils/colors'
 
 import { connect } from 'react-redux'
 
-
-
 class Deck extends Component {
   
   constructor(props) {
@@ -15,16 +13,18 @@ class Deck extends Component {
     };
   }
 
+  componentDidMount () {
+    
+  }
+
   render() {
 
-    const {deck, cards} = this.props;
-    console.log(cards)
-
+    const {deck} = this.props;
     return (
       <View style={styles.container}>
           
-        <Text>{deck.title}</Text>
-        <Text>{cards ? cards.length : []} Cards</Text>
+        <Text>{deck ? deck.title : ""}</Text>
+        <Text>{deck.questions ? deck.questions.length : []} Cards</Text>
             
         <TouchableOpacity
             style={
@@ -87,16 +87,11 @@ const styles = StyleSheet.create({
 
 
 function mapStateToProps (state, { navigation }) {
-  const {decks, cards} = state
+  const {decks} = state
   const { keyID } = navigation.state.params
-  // console.log(cards)
-  // console.log(keyID)
-  // console.log(cards[keyID])
+
   return {
-    deck: Object.values(decks).filter((deck) => (
-      deck.title === keyID
-    ))[0],
-    cards: cards[keyID]
+    deck: decks ? decks[keyID] : {}
   }
 }
 

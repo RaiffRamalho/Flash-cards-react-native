@@ -6,7 +6,6 @@ import { purple, white } from '../utils/colors'
 class Quiz extends Component {
 
   showAnswer = () => {
-    console.log("submit")
     this.props.navigation.navigate(
       'Answer',
     )
@@ -25,7 +24,7 @@ class Quiz extends Component {
           }
           onPress={this.showAnswer}
         >
-          <Text style={styles.btnShowText}>Show Answer</Text>
+          <Text style={styles.btnShowText}>Flip Card</Text>
         </TouchableOpacity>
         
         
