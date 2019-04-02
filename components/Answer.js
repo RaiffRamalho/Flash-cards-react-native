@@ -5,21 +5,30 @@ import { purple, white, red, green } from '../utils/colors'
 
 class Answer extends Component {
 
-  submitAnswer = () => {
-    this.props.navigation.goBack()
-  };
+  constructor(props) {
+    super(props);
+  }
+
+  goBack = (selected) => {
+    const { navigation } = this.props;
+    navigation.goBack();
+    navigation.state.params.onSelect({ correct: selected ==="correct" ? true : false });
+  }
 
   render() {
+
+    const answer = this.props.navigation.state.params.answer
+
     return (
       <View style={styles.container}> 
-        <Text>The answer is: Answer</Text>
+        <Text>The answer is: {answer}</Text>
         
         <Text></Text>
         <TouchableOpacity
           style={
             Platform.OS === "ios" ? styles.iosCorrectBtn : styles.AndroidCorrectBtn
           }
-          onPress={this.submitAnswer}
+          onPress={() => this.goBack("correct")}
         >
           <Text style={styles.btnText}>Corret</Text>
         </TouchableOpacity>
@@ -28,7 +37,7 @@ class Answer extends Component {
           style={
             Platform.OS === "ios" ? styles.iosIncorrectBtn : styles.AndroidIncorrectBtn
           }
-          onPress={this.submitAnswer}
+          onPress={() => this.goBack("incorrect")}
         >
           <Text style={styles.btnText}>Incorret</Text>
         </TouchableOpacity>

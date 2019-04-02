@@ -45,6 +45,7 @@ class DeckList extends Component {
       <View style={styles.container}>
 
         <FlatList
+
           data={data}
           renderItem={({item}) =>
           <TouchableOpacity 
@@ -59,6 +60,7 @@ class DeckList extends Component {
               <Text>{item.questions.length} Cards</Text>
             </View>
           </TouchableOpacity>}
+          keyExtractor={(item, index) => index.toString()}
         />
       
         <TouchableOpacity
