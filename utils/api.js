@@ -14,7 +14,8 @@ export function saveDeckTitle ({ key }){
   return AsyncStorage.mergeItem(FLASH_CARDS_STORAGE_KEY, JSON.stringify({
     [key]: {
       title: key,
-      questions: []
+      questions: [],
+      indexOfActualQuestion: 0
     }
   }))
 }

@@ -19,7 +19,8 @@ class NewDeck extends Component {
     super(props);
     this.state = { 
       title: 'Title',
-      questions: []
+      questions: [],
+      indexOfActualQuestion: 0,
     };
   }
 

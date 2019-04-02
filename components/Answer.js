@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, Platform } from 'react-native'
-import { purple, white, red, green } from '../utils/colors'
+import { purple } from '../utils/colors'
 
 
 class Answer extends Component {
@@ -9,10 +9,9 @@ class Answer extends Component {
     super(props);
   }
 
-  goBack = (selected) => {
+  goBack = () => {
     const { navigation } = this.props;
     navigation.goBack();
-    navigation.state.params.onSelect({ correct: selected ==="correct" ? true : false });
   }
 
   render() {
@@ -28,19 +27,10 @@ class Answer extends Component {
           style={
             Platform.OS === "ios" ? styles.iosCorrectBtn : styles.AndroidCorrectBtn
           }
-          onPress={() => this.goBack("correct")}
+          onPress={this.goBack}
         >
-          <Text style={styles.btnText}>Corret</Text>
         </TouchableOpacity>
-        <Text></Text>
-        <TouchableOpacity
-          style={
-            Platform.OS === "ios" ? styles.iosIncorrectBtn : styles.AndroidIncorrectBtn
-          }
-          onPress={() => this.goBack("incorrect")}
-        >
-          <Text style={styles.btnText}>Incorret</Text>
-        </TouchableOpacity>
+        
       </View>
     )
   }
@@ -68,48 +58,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     justifyContent: "center",
     alignItems: "center"
-  },
-  iosCorrectBtn: {
-    backgroundColor: green,
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40
-  },
-  AndroidCorrectBtn: {
-    backgroundColor: green,
-    padding: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
-    height: 45,
-    borderRadius: 2,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  iosIncorrectBtn: {
-    backgroundColor: red,
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40
-  },
-  AndroidIncorrectBtn: {
-    backgroundColor: red,
-    padding: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
-    height: 45,
-    borderRadius: 2,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  btnText: {
-    color: white,
-    fontSize: 15,
-    textAlign: "center"
-  },
+  }
   
 })
 

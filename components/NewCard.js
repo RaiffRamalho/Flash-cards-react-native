@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity, Platform, TextInput } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, Platform, TextInput, Picker } from 'react-native'
 import { purple, white } from '../utils/colors'
 
 import { connect } from 'react-redux'
@@ -14,7 +14,8 @@ class NewCard extends Component {
     super(props);
     this.state = { 
       question: 'Question',
-      answer: 'Answer'
+      answer: 'Yes',
+      answered: 'Not yet'
     };
   }
 
@@ -29,6 +30,7 @@ class NewCard extends Component {
       { 
         question: question,
         answer: answer,
+        answered, answered
       }
     ))
 
@@ -38,10 +40,10 @@ class NewCard extends Component {
         card : {
           question: question,
           answer: answer,
+          answered, answered
         }
       }
     ).then(getDecks().then(result => {
-      console.log(result)
     }))
 
     this.props.navigation.navigate(
@@ -61,11 +63,18 @@ class NewCard extends Component {
         />
         <Text></Text>
         <Text>Answer</Text>
-        <TextInput
-        style={{height: 100, width:300, borderColor: 'gray', borderWidth: 1}}
-        onChangeText={(answer) => this.setState({answer})}
-        value={this.state.answer}
-        />
+        <View>
+
+          <Picker
+            selectedValue={this.state.answer}
+            style={{height: 60, width: 100}}
+            onValueChange={(itemValue, itemIndex) =>
+              this.setState({answer: itemValue})
+            }>
+            <Picker.Item key="Yes" label="Yes" value="Yes" />
+            <Picker.Item key="No" label="No" value="No" />
+          </Picker>
+        </View>
         <Text></Text>       
         <TouchableOpacity
           style={

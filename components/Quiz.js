@@ -1,46 +1,52 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, Platform } from 'react-native'
-import { purple, white } from '../utils/colors'
+import { purple, white, green, red  } from '../utils/colors'
 
 import { connect } from 'react-redux'
+import { incrementCardIndex, saveCardAnswer} from '../actions'
+
 
 
 class Quiz extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { 
-      indexOfActualQuestion: 0,
-      correct: false
-    }
   }
-
-  onSelect = data => {
-    console.log(data)
-    this.setState(data);
-  };
   
   showAnswer = () => {
 
-    const deck = this.props.navigation.state.params.deck
+    const {deck} = this.props
 
     this.props.navigation.navigate(
       'Answer',
       { 
         onSelect: this.onSelect,
-        'answer': deck.questions[this.state.indexOfActualQuestion].answer
+        'answer': deck.questions[deck.indexOfActualQuestion].answer
       }
     )
+  }
+
+  submitAnswer = (answer) => {
+
+    const {deck} = this.props
+    const indexUpdated = ++deck.indexOfActualQuestion
+
+    this.props.dispatch(incrementCardIndex(
+      deck.title,
+      indexUpdated
+    ))
   }
 
 
   render() {
     const { deck } = this.props
+    console.log(deck)
+    console.log("---------------------------------------")
     
     return (
       <View style={styles.container}> 
-        <Text>{this.state.indexOfActualQuestion}/{deck.questions.length} Question</Text>
-        <Text>{deck.questions[this.state.indexOfActualQuestion].question}</Text>
+        <Text>{deck.indexOfActualQuestion}/{deck.questions.length} Question</Text>
+        <Text>{deck.questions[deck.indexOfActualQuestion].question}</Text>
         <TouchableOpacity
           style={
             Platform.OS === "ios" ? styles.iosShowBtn : styles.AndroidShowBtn
@@ -49,11 +55,39 @@ class Quiz extends Component {
         >
           <Text style={styles.btnShowText}>Flip Card</Text>
         </TouchableOpacity>
-        <Text>{this.state.correct ? "Corect" : "Not Corect"}</Text>
+
+        <Text></Text>
+
+        <TouchableOpacity
+          style={
+            Platform.OS === "ios" ? styles.iosCorrectBtn : styles.AndroidCorrectBtn
+          }
+          onPress={() => this.submitAnswer("Yes")}
+        >
+          <Text style={styles.btnText}>Corret</Text>
+        </TouchableOpacity>
+        <Text></Text>
+        <TouchableOpacity
+          style={
+            Platform.OS === "ios" ? styles.iosIncorrectBtn : styles.AndroidIncorrectBtn
+          }
+          onPress={() => this.submitAnswer("No")}
+        >
+          <Text style={styles.btnText}>Incorrect</Text>
+        </TouchableOpacity>
         
         
       </View>
     )
+  }
+}
+
+function mapStateToProps (state, { navigation }) {
+  
+  const { deck } = navigation.state.params
+
+  return {
+    deck: deck
   }
 }
 
@@ -85,15 +119,50 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: "center"
   },
+  iosCorrectBtn: {
+    backgroundColor: green,
+    padding: 10,
+    borderRadius: 7,
+    height: 45,
+    marginLeft: 40,
+    marginRight: 40
+  },
+  AndroidCorrectBtn: {
+    backgroundColor: green,
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    height: 45,
+    borderRadius: 2,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  iosIncorrectBtn: {
+    backgroundColor: red,
+    padding: 10,
+    borderRadius: 7,
+    height: 45,
+    marginLeft: 40,
+    marginRight: 40
+  },
+  AndroidIncorrectBtn: {
+    backgroundColor: red,
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    height: 45,
+    borderRadius: 2,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  btnText: {
+    color: white,
+    fontSize: 15,
+    textAlign: "center"
+  },
   
 })
 
-function mapStateToProps (state, { navigation }) {
-  const { deck } = navigation.state.params
 
-  return {
-    deck: deck ? deck : {}
-  }
-}
 
 export default connect(mapStateToProps)(Quiz);
