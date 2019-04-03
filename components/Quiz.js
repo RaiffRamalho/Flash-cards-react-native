@@ -11,6 +11,9 @@ class Quiz extends Component {
 
   constructor(props) {
     super(props);
+    // console.log("props", props)
+    const {deck} = this.props
+    this.state = deck
   }
   
   showAnswer = () => {
@@ -28,19 +31,22 @@ class Quiz extends Component {
 
   submitAnswer = (answer) => {
 
-    const {deck} = this.props
-    const indexUpdated = ++deck.indexOfActualQuestion
+    const title = this.state.title
+    // const indexUpdated = ++this.state.indexOfActualQuestion
 
-    this.props.dispatch(incrementCardIndex(
-      deck.title,
-      indexUpdated
-    ))
+    this.props.submitDispatchAnswer(
+      title
+      // indexUpdated
+    )
+  }
+  componentWillReceiveProps(props) {
+    console.log(props)
   }
 
 
   render() {
-    const { deck } = this.props
-    console.log(deck)
+    const { deck }  = this.props
+    console.log("render deck", deck)
     console.log("---------------------------------------")
     
     return (
@@ -76,15 +82,25 @@ class Quiz extends Component {
           <Text style={styles.btnText}>Incorrect</Text>
         </TouchableOpacity>
         
-        
       </View>
     )
   }
 }
 
-function mapStateToProps (state, { navigation }) {
+function mapDispatchToProps(dispatch, ownProps) {
+
+  return {
+    // dispatching actions returned by action creators
+    submitDispatchAnswer: (title) => {dispatch(incrementCardIndex(
+      title
+    ))}
+  }
+}
+
+function mapStateToProps (state,{navigation}) {
   
-  const { deck } = navigation.state.params
+  const deck  = state.decks[navigation.state.params.deck.title]
+  console.log("map deck", deck)
 
   return {
     deck: deck
@@ -165,4 +181,4 @@ const styles = StyleSheet.create({
 
 
 
-export default connect(mapStateToProps)(Quiz);
+export default connect(mapStateToProps,mapDispatchToProps)(Quiz);

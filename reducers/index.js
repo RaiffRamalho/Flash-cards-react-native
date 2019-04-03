@@ -34,25 +34,13 @@ export default function decks (state = {}, action) {
         }
       }
     case INCREMENT_INDEX_OF_CARD :
-      const {deckID, indexUpdated} = action
-      return {
-        ...state,
-        decks: {
-          ...state.decks,
-          [deckID]: {
-            ...state.decks[deckID],
-            indexOfActualQuestion: indexUpdated
-          }
-        }
-      }
-    case ANSWERED_CARD :
       return {
         ...state,
         decks: {
           ...state.decks,
           [action.deckID]: {
             ...state.decks[action.deckID],
-            questions: [...state.decks[action.deckID].questions, action.card],
+            indexOfActualQuestion: state.decks[action.deckID].indexOfActualQuestion + 1,
           }
         }
       }
