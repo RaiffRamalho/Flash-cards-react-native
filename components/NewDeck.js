@@ -20,7 +20,7 @@ class NewDeck extends Component {
     this.state = { 
       title: 'Title',
       questions: [],
-      indexOfActualQuestion: 0,
+      indexOfCurrentQuestion: 0,
     };
   }
 

@@ -40,7 +40,7 @@ export default function decks (state = {}, action) {
           ...state.decks,
           [action.deckID]: {
             ...state.decks[action.deckID],
-            indexOfActualQuestion: state.decks[action.deckID].indexOfActualQuestion + 1,
+            indexOfCurrentQuestion: state.decks[action.deckID].indexOfCurrentQuestion + 1,
           }
         }
       }

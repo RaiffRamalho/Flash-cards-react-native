@@ -15,7 +15,7 @@ export function saveDeckTitle ({ key }){
     [key]: {
       title: key,
       questions: [],
-      indexOfActualQuestion: 0
+      indexOfCurrentQuestion: 0
     }
   }))
 }

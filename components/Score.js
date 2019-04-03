@@ -5,10 +5,13 @@ import { purple, white } from '../utils/colors'
 
 class Score extends Component {
 
+  
+
   render() {
+    const {score} = this.props.navigation.state.params
     return (
       <View style={styles.container}> 
-        <Text>Score</Text>
+        <Text>Score : {score}</Text>
       </View>
     )
   }

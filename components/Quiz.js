@@ -22,37 +22,34 @@ class Quiz extends Component {
 
     this.props.navigation.navigate(
       'Answer',
-      { 
-        onSelect: this.onSelect,
-        'answer': deck.questions[deck.indexOfActualQuestion].answer
-      }
+      { onSelect: this.onSelect,
+        'answer': deck.questions[deck.indexOfCurrentQuestion].answer }
     )
   }
 
   submitAnswer = (answer) => {
 
     const title = this.state.title
-    // const indexUpdated = ++this.state.indexOfActualQuestion
 
-    this.props.submitDispatchAnswer(
-      title
-      // indexUpdated
-    )
-  }
-  componentWillReceiveProps(props) {
-    console.log(props)
-  }
+    this.props.submitDispatchIndex(title)
 
+  }
 
   render() {
     const { deck }  = this.props
-    console.log("render deck", deck)
-    console.log("---------------------------------------")
-    
+    try {
+      if(deck.indexOfCurrentQuestion === deck.questions.length){
+        this.props.navigation.navigate('Score', {'score': 10 }) 
+      }  
+    } catch (error) {
+      console.log(error);
+    }
+    if(deck.indexOfCurrentQuestion === deck.questions.length) deck.indexOfCurrentQuestion -=1
+
     return (
       <View style={styles.container}> 
-        <Text>{deck.indexOfActualQuestion}/{deck.questions.length} Question</Text>
-        <Text>{deck.questions[deck.indexOfActualQuestion].question}</Text>
+        <Text>{deck.indexOfCurrentQuestion}/{deck.questions.length} Question</Text>
+        <Text>{deck.questions[deck.indexOfCurrentQuestion].question}</Text>
         <TouchableOpacity
           style={
             Platform.OS === "ios" ? styles.iosShowBtn : styles.AndroidShowBtn
@@ -91,7 +88,7 @@ function mapDispatchToProps(dispatch, ownProps) {
 
   return {
     // dispatching actions returned by action creators
-    submitDispatchAnswer: (title) => {dispatch(incrementCardIndex(
+    submitDispatchIndex: (title) => {dispatch(incrementCardIndex(
       title
     ))}
   }
@@ -100,7 +97,7 @@ function mapDispatchToProps(dispatch, ownProps) {
 function mapStateToProps (state,{navigation}) {
   
   const deck  = state.decks[navigation.state.params.deck.title]
-  console.log("map deck", deck)
+  // console.log("map deck", deck)
 
   return {
     deck: deck

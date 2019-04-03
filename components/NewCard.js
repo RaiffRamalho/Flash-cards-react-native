@@ -22,7 +22,7 @@ class NewCard extends Component {
 
   create = () => {
     
-    const {question, answer} = this.state
+    const {question, answer, answered} = this.state
     const { keyID } = this.props.navigation.state.params
 
     this.props.dispatch(saveCardToDeck(

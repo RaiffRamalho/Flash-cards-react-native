@@ -5,6 +5,7 @@ import Deck from './components/Deck'
 import Quiz from './components/Quiz'
 import NewCard from './components/NewCard'
 import Answer from './components/Answer'
+import Score from './components/Score'
 import { createAppContainer, createStackNavigator } from 'react-navigation'
 import { purple, white } from './utils/colors'
 import { Constants } from 'expo'
@@ -63,6 +64,16 @@ const MainNavigator = createAppContainer(createStackNavigator({
     screen: Answer,
     navigationOptions: ({ navigation }) => ({
       title: 'Answer',
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      }
+    }),
+  },
+  Score: {
+    screen: Score,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Score',
       headerTintColor: white,
       headerStyle: {
         backgroundColor: purple,
