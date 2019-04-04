@@ -4,6 +4,8 @@ import { purple, white } from '../utils/colors'
 import { connect } from 'react-redux'
 
 import { incrementCardIndex} from '../actions'
+import { incrementIndex } from '../utils/api'
+
 
 class Score extends Component {
 
@@ -13,8 +15,10 @@ class Score extends Component {
       'DeckList'
     )
     const title = navigation.state.params.title
-    const indexUpdated = -1
-    this.props.dispatch(incrementCardIndex(title, indexUpdated))
+    
+    incrementIndex({key: title, index: -1})
+    this.props.dispatch(incrementCardIndex(title, -1))
+    
   }
 
   render() {

@@ -4,6 +4,8 @@ import { purple, white, green, red  } from '../utils/colors'
 
 import { connect } from 'react-redux'
 import { incrementCardIndex, saveCardAnswer} from '../actions'
+import { incrementIndex, saveUserAnswer } from '../utils/api'
+
 
 
 
@@ -20,16 +22,19 @@ class Quiz extends Component {
     this.props.navigation.navigate(
       'Answer',
       { 
-        'answer': deck.questions[deck.indexOfCurrentQuestion].answer,
+        'answer': deck.questions[deck.indexOfCurrentQuestion].answer
       }
     )
   }
+  
 
   submitAnswer = (answer) => {
 
     const { deck }  = this.props
 
+    saveUserAnswer({key: deck.title, indexOfCurrentQuestion: deck.indexOfCurrentQuestion, userAnswer: answer})
     this.props.submitDispatchAnswer(deck.title, deck.indexOfCurrentQuestion, answer )
+    incrementIndex({key: deck.title, index:1})
     this.props.submitDispatchIndex(deck.title, 1)
 
   }
@@ -45,6 +50,17 @@ class Quiz extends Component {
 
   render() {
     const { deck, isEnded }  = this.props
+    if(isEnded){
+
+      
+      this.props.navigation.navigate('Score', 
+      {
+        'score': this.checkScore(),
+        'title': deck.title,
+        'questionsNum' : deck.questions.length
+      }) 
+    }
+    
 
     return ( 
       <View style={styles.container}> 
@@ -85,15 +101,7 @@ class Quiz extends Component {
           </View>  
 
         )}
-        {isEnded && (
-          
-          this.props.navigation.navigate('Score', 
-            {
-              'score': this.checkScore(),
-              'title': deck.title,
-              'questionsNum' : deck.questions.length
-            }) 
-        )}
+        
         
       </View>
     )

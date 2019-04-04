@@ -32,20 +32,36 @@ export function addCardToDeck ({ key, card }){
     let data = JSON.parse(results)[key]
     data.questions.push(card)
     
-    AsyncStorage.setItem(FLASH_CARDS_STORAGE_KEY, JSON.stringify({[key]:data})).then(result => JSON.parse(result))
+    AsyncStorage.setItem(FLASH_CARDS_STORAGE_KEY, JSON.stringify({[key]:data}))
+    .then(result => JSON.parse(result))
   
   })
   
 }
 
-export function incrementCurrentIndex ({ key, index }){
+export function incrementIndex ({ key, index }){
   return AsyncStorage.getItem(FLASH_CARDS_STORAGE_KEY)
   .then(results => {
 
     let data = JSON.parse(results)[key]
-    data.indexOfCurrentQuestion = index
+    data.indexOfCurrentQuestion = index > 0 ? data.indexOfCurrentQuestion += index : 0
     
-    AsyncStorage.setItem(FLASH_CARDS_STORAGE_KEY, JSON.stringify({[key]:data})).then(result => JSON.parse(result))
+    AsyncStorage.setItem(FLASH_CARDS_STORAGE_KEY, JSON.stringify({[key]:data}))
+
+  
+  })
+  
+}
+
+export function saveUserAnswer ({ key, indexOfCurrentQuestion, userAnswer }){
+  AsyncStorage.getItem(FLASH_CARDS_STORAGE_KEY)
+  .then(results => {
+
+    let data = JSON.parse(results)[key]
+    data.questions[indexOfCurrentQuestion].answered = userAnswer
+    console.log("api data", data)
+
+    return AsyncStorage.setItem(FLASH_CARDS_STORAGE_KEY, JSON.stringify({[key]:data}))
   
   })
   
