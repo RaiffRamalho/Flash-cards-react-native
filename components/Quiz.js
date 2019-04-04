@@ -11,9 +11,6 @@ class Quiz extends Component {
 
   constructor(props) {
     super(props);
-    // console.log("props", props)
-    const {deck} = this.props
-    this.state = deck
   }
   
   showAnswer = () => {
@@ -22,85 +19,110 @@ class Quiz extends Component {
 
     this.props.navigation.navigate(
       'Answer',
-      { onSelect: this.onSelect,
-        'answer': deck.questions[deck.indexOfCurrentQuestion].answer }
+      { 
+        'answer': deck.questions[deck.indexOfCurrentQuestion].answer,
+      }
     )
   }
 
   submitAnswer = (answer) => {
 
-    const title = this.state.title
+    const { deck }  = this.props
 
-    this.props.submitDispatchIndex(title)
+    this.props.submitDispatchAnswer(deck.title, deck.indexOfCurrentQuestion, answer )
+    this.props.submitDispatchIndex(deck.title, 1)
 
   }
 
-  render() {
+  checkScore = () => {
+    let score = 0
     const { deck }  = this.props
-    try {
-      if(deck.indexOfCurrentQuestion === deck.questions.length){
-        this.props.navigation.navigate('Score', {'score': 10 }) 
-      }  
-    } catch (error) {
-      console.log(error);
+    for(ind in deck.questions){
+      deck.questions[ind].answer == deck.questions[ind].answered ? score+=1: score
     }
-    if(deck.indexOfCurrentQuestion === deck.questions.length) deck.indexOfCurrentQuestion -=1
+    return score
+  }
 
-    return (
+  render() {
+    const { deck, isEnded }  = this.props
+
+    return ( 
       <View style={styles.container}> 
-        <Text>{deck.indexOfCurrentQuestion}/{deck.questions.length} Question</Text>
-        <Text>{deck.questions[deck.indexOfCurrentQuestion].question}</Text>
-        <TouchableOpacity
-          style={
-            Platform.OS === "ios" ? styles.iosShowBtn : styles.AndroidShowBtn
-          }
-          onPress={this.showAnswer}
-        >
-          <Text style={styles.btnShowText}>Flip Card</Text>
-        </TouchableOpacity>
+        {!isEnded &&(
+          <View>
 
-        <Text></Text>
+         
+            <Text>{(deck.indexOfCurrentQuestion)+1}  /{deck.questions.length} Question</Text>
+            <Text>{deck.questions[deck.indexOfCurrentQuestion].question}</Text>
+            <TouchableOpacity
+              style={
+                Platform.OS === "ios" ? styles.iosShowBtn : styles.AndroidShowBtn
+              }
+              onPress={this.showAnswer}
+            >
+              <Text style={styles.btnShowText}>Flip Card</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          style={
-            Platform.OS === "ios" ? styles.iosCorrectBtn : styles.AndroidCorrectBtn
-          }
-          onPress={() => this.submitAnswer("Yes")}
-        >
-          <Text style={styles.btnText}>Corret</Text>
-        </TouchableOpacity>
-        <Text></Text>
-        <TouchableOpacity
-          style={
-            Platform.OS === "ios" ? styles.iosIncorrectBtn : styles.AndroidIncorrectBtn
-          }
-          onPress={() => this.submitAnswer("No")}
-        >
-          <Text style={styles.btnText}>Incorrect</Text>
-        </TouchableOpacity>
+            <Text></Text>
+
+            <TouchableOpacity
+              style={
+                Platform.OS === "ios" ? styles.iosCorrectBtn : styles.AndroidCorrectBtn
+              }
+              onPress={() => this.submitAnswer("Yes")}
+            >
+              <Text style={styles.btnText}>Corret</Text>
+            </TouchableOpacity>
+            <Text></Text>
+            <TouchableOpacity
+              style={
+                Platform.OS === "ios" ? styles.iosIncorrectBtn : styles.AndroidIncorrectBtn
+              }
+              onPress={() => this.submitAnswer("No")}
+            >
+              <Text style={styles.btnText}>Incorrect</Text>
+            </TouchableOpacity>
+          </View>  
+
+        )}
+        {isEnded && (
+          
+          this.props.navigation.navigate('Score', 
+            {
+              'score': this.checkScore(),
+              'title': deck.title,
+              'questionsNum' : deck.questions.length
+            }) 
+        )}
         
       </View>
     )
   }
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
-
-  return {
-    // dispatching actions returned by action creators
-    submitDispatchIndex: (title) => {dispatch(incrementCardIndex(
-      title
-    ))}
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  
+    submitDispatchIndex: (title, indexUpdated) => dispatch(incrementCardIndex(
+      title, 
+      indexUpdated
+    )),
+    submitDispatchAnswer: (title, currentIndex, answered) => dispatch(saveCardAnswer(
+      title, 
+      currentIndex, 
+      answered
+    ))
+  
+})
 
 function mapStateToProps (state,{navigation}) {
   
   const deck  = state.decks[navigation.state.params.deck.title]
-  // console.log("map deck", deck)
+
+  let isEnded = deck.questions.length === deck.indexOfCurrentQuestion ? true : false
 
   return {
-    deck: deck
+    deck: deck,
+    isEnded : isEnded
   }
 }
 

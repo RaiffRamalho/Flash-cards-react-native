@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StatusBar, TouchableOpacity } from 'react-native'
+import { View, StatusBar, Button } from 'react-native'
 import TabsNav from './components/TabsNav'
 import Deck from './components/Deck'
 import Quiz from './components/Quiz'
@@ -13,7 +13,6 @@ import { Constants } from 'expo'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
-
 
 function UdaciStatusBar ({backgroundColor, ...props}) {
   return (
@@ -74,10 +73,12 @@ const MainNavigator = createAppContainer(createStackNavigator({
     screen: Score,
     navigationOptions: ({ navigation }) => ({
       title: 'Score',
+      headerLeft: null,
       headerTintColor: white,
       headerStyle: {
         backgroundColor: purple,
-      }
+      },
+      
     }),
   },
 }));

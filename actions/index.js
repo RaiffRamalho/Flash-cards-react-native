@@ -41,10 +41,11 @@ export function incrementCardIndex (deckID, indexUpdated) {
   }
 } 
 
-export function saveCardAnswer (deckID, answered) {
+export function saveCardAnswer (deckID, indexOfCurrentQuestion, answered) {
   return {
     type: ANSWERED_CARD,
     deckID,
+    indexOfCurrentQuestion,
     answered
   }
 } 

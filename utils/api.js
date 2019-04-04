@@ -38,6 +38,19 @@ export function addCardToDeck ({ key, card }){
   
 }
 
+export function incrementCurrentIndex ({ key, index }){
+  return AsyncStorage.getItem(FLASH_CARDS_STORAGE_KEY)
+  .then(results => {
+
+    let data = JSON.parse(results)[key]
+    data.indexOfCurrentQuestion = index
+    
+    AsyncStorage.setItem(FLASH_CARDS_STORAGE_KEY, JSON.stringify({[key]:data})).then(result => JSON.parse(result))
+  
+  })
+  
+}
+
 export function cleanStorage(){
   return AsyncStorage.clear(result => result)
 }

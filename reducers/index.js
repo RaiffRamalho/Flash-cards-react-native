@@ -4,11 +4,12 @@ import {
     REMOVE_DECKS, 
     ADD_CARD_TO_DECK, 
     INCREMENT_INDEX_OF_CARD,
-    ANSWER_CARD } from '../actions'
+    ANSWERED_CARD } from '../actions'
 
 export default function decks (state = {}, action) {
   // console.log("state", state)
   // console.log("action", action)
+  const {decks} = state
   switch (action.type) {
     case RECEIVE_DECKS :
       return {
@@ -40,7 +41,19 @@ export default function decks (state = {}, action) {
           ...state.decks,
           [action.deckID]: {
             ...state.decks[action.deckID],
-            indexOfCurrentQuestion: state.decks[action.deckID].indexOfCurrentQuestion + 1,
+            indexOfCurrentQuestion: action.indexUpdated > 0 ? state.decks[action.deckID].indexOfCurrentQuestion + (action.indexUpdated) : 0,
+          }
+        }
+      }
+    case ANSWERED_CARD :
+      return {
+        ...state,
+        decks: {
+          ...state.decks,
+          [action.deckID]: {
+            ...state.decks[action.deckID],
+            questions : state.decks[action.deckID].questions.map((item, index) => 
+              index !== action.indexOfCurrentQuestion ? item : Object.assign({}, item, { answered: action.answered }))
           }
         }
       }
