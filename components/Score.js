@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, StyleSheet, Text,TouchableOpacity } from 'react-native'
 import { purple, white } from '../utils/colors'
 import { connect } from 'react-redux'
+import { clearLocalNotification, setLocalNotification } from "../utils/helpers"
 
 import { incrementCardIndex} from '../actions'
 import { incrementIndex } from '../utils/api'
@@ -18,6 +19,9 @@ class Score extends Component {
     
     incrementIndex({key: title, index: -1})
     this.props.dispatch(incrementCardIndex(title, -1))
+
+    clearLocalNotification()
+      .then(setLocalNotification)
     
   }
 

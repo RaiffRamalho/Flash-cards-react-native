@@ -1,11 +1,12 @@
 import React from 'react'
-import { View, StatusBar, Button } from 'react-native'
+import { View, StatusBar } from 'react-native'
 import TabsNav from './components/TabsNav'
 import Deck from './components/Deck'
 import Quiz from './components/Quiz'
 import NewCard from './components/NewCard'
 import Answer from './components/Answer'
 import Score from './components/Score'
+import { setLocalNotification } from './utils/helpers'
 import { createAppContainer, createStackNavigator } from 'react-navigation'
 import { purple, white } from './utils/colors'
 import { Constants } from 'expo'
@@ -13,6 +14,8 @@ import { Constants } from 'expo'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
+
+
 
 function UdaciStatusBar ({backgroundColor, ...props}) {
   return (
@@ -84,6 +87,11 @@ const MainNavigator = createAppContainer(createStackNavigator({
 }));
 
 export default class App extends React.Component {
+
+  componentDidMount() {
+    setLocalNotification()
+  }
+
   render() {
     return (
       <Provider store={createStore(reducer)}>
