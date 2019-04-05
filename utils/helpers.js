@@ -42,13 +42,13 @@ export function setLocalNotification () {
               today.setDate(today.getDate())
               //set hour and minute
               //default hour: 10 am
-              today.setHours(10)
-              today.setMinutes(00)
+              today.setHours(14)
+              today.setMinutes(55)
 
               Notifications.scheduleLocalNotificationAsync(
                 createNotification(),
                 {
-                  time: tomorrow,
+                  time: today,
                   repeat: 'day',
                 }
               )

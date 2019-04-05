@@ -6,7 +6,7 @@ import Quiz from './components/Quiz'
 import NewCard from './components/NewCard'
 import Answer from './components/Answer'
 import Score from './components/Score'
-import { setLocalNotification } from './utils/helpers'
+import { setLocalNotification, clearLocalNotification } from './utils/helpers'
 import { createAppContainer, createStackNavigator } from 'react-navigation'
 import { purple, white } from './utils/colors'
 import { Constants } from 'expo'
@@ -89,7 +89,8 @@ const MainNavigator = createAppContainer(createStackNavigator({
 export default class App extends React.Component {
 
   componentDidMount() {
-    setLocalNotification()
+    clearLocalNotification()
+      .then(setLocalNotification)
   }
 
   render() {
