@@ -13,42 +13,42 @@ class Deck extends Component {
     };
   }
 
-  componentDidMount () {
-    
-  }
-
   render() {
 
     const {deck} = this.props;
     return (
       <View style={styles.container}>
-          
-        <Text>{deck ? deck.title : ""}</Text>
-        <Text>{deck.questions ? deck.questions.length : []} Cards</Text>
+
+        <View style={styles.textView}>          
+          <Text style={styles.titleText}>{deck ? deck.title : ""}</Text>
+          <Text style={styles.titleText}>{deck.questions ? deck.questions.length : []} Cards</Text>
+        </View>
+
+        <View style={styles.btn1View}>
+          <TouchableOpacity
+              style={
+                Platform.OS === "ios" ? styles.iosBtn : styles.AndroidBtn
+              }
+              onPress={() => this.props.navigation.navigate(
+                'Quiz',
+                {deck: deck}
+                )}
+                >
+            <Text style={styles.btnText}>Quiz</Text>
+          </TouchableOpacity>
+          <Text>
             
-        <TouchableOpacity
-            style={
-              Platform.OS === "ios" ? styles.iosBtn : styles.AndroidBtn
-            }
-            onPress={() => this.props.navigation.navigate(
-              'Quiz',
-              {deck: deck}
-            )}
-          >
-          <Text style={styles.btnText}>Quiz</Text>
-        </TouchableOpacity>
-        <Text></Text>
-        <TouchableOpacity
-            style={
-              Platform.OS === "ios" ? styles.iosBtn : styles.AndroidBtn
-            }
-            onPress={() => this.props.navigation.navigate(
-              'NewCard',
-              {keyID: deck.title}
-            )}
-          >
-          <Text style={styles.btnText}>Add Card</Text>
-        </TouchableOpacity>
+          </Text>
+          <TouchableOpacity
+              style={styles.AndroidBtn}
+              onPress={() => this.props.navigation.navigate(
+                'NewCard',
+                {keyID: deck.title}
+                )}
+                >
+            <Text style={styles.btnText}>Add Card</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
@@ -59,13 +59,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 15,
     alignItems: "center"
-  },iosBtn: {
-    backgroundColor: purple,
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40
   },
   AndroidBtn: {
     backgroundColor: purple,
@@ -73,7 +66,7 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
     paddingRight: 30,
     height: 45,
-    borderRadius: 2,
+    borderRadius: 25,
     justifyContent: "center",
     alignItems: "center"
   },
@@ -82,6 +75,16 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: "center"
   },
+  textView: {
+    flex: 1
+  },
+  btn1View: {
+    flex: 1
+  },
+  titleText :{
+    fontSize: 25,
+    fontFamily: 'serif'
+  }
   
 })
 

@@ -17,7 +17,7 @@ class Score extends Component {
     )
     const title = navigation.state.params.title
     
-    incrementIndex({key: title, index: -1})
+    // incrementIndex({key: title, index: -1})
     this.props.dispatch(incrementCardIndex(title, -1))
 
     clearLocalNotification()

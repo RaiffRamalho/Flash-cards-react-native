@@ -56,8 +56,8 @@ class DeckList extends Component {
             >
             
             <View style={styles.item}> 
-              <Text>{item.title}</Text>
-              <Text>{item.questions.length} Cards</Text>
+              <Text style={styles.titleText}>{item.title}</Text>
+              <Text style={styles.titleText}>{item.questions.length} Cards</Text>
             </View>
           </TouchableOpacity>}
           keyExtractor={(item, index) => index.toString()}
@@ -78,7 +78,6 @@ class DeckList extends Component {
 
 
 function mapStateToProps ({decks}) {
-  // console.log(decks)
   return {
     data: decks ? Object.values(decks) : []
   }
@@ -97,15 +96,11 @@ const styles = StyleSheet.create({
     backgroundColor: lightPurp,
     flexGrow: 1,
     margin: 4,
-    padding: 20
-  },
-  iosCleanBtn: {
-    backgroundColor: purple,
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40
+    padding: 20,
+    borderStyle: 'solid',
+    borderWidth: 5,
+    borderRadius: 15,
+    width: 200
   },
   AndroidCleanBtn: {
     backgroundColor: purple,
@@ -113,7 +108,7 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
     paddingRight: 30,
     height: 45,
-    borderRadius: 2,
+    borderRadius: 25,
     justifyContent: "center",
     alignItems: "center"
   },
@@ -122,6 +117,10 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: "center"
   },
+  titleText :{
+    fontSize: 25,
+    fontFamily: 'serif'
+  }
 })
 
 

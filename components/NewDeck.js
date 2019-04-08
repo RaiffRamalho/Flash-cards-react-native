@@ -18,7 +18,7 @@ class NewDeck extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      title: 'Title',
+      title: '',
       questions: [],
       indexOfCurrentQuestion: 0,
     };
@@ -44,21 +44,26 @@ class NewDeck extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Title</Text>
-        <TextInput
-        style={{height: 40, width:200, borderColor: 'gray', borderWidth: 1}}
-        onChangeText={(title) => this.setState({title})}
-        value={this.state.title}
-        />
-        <Text></Text>        
-        <TouchableOpacity
-          style={
-            Platform.OS === "ios" ? styles.iosCreateBtn : styles.AndroidCreateBtn
-          }
-          onPress={this.create}
-        >
-          <Text style={styles.createBtnText}>Create</Text>
-        </TouchableOpacity>
+        {/* <View style={{flex:1}}>
+        </View> */}
+        <View style={styles.textView}>
+          <Text style={styles.titleText}>Title</Text>
+          <TextInput
+          style={{height: 40, width:200, borderColor: 'gray', borderWidth: 1}}
+          onChangeText={(title) => this.setState({title})}
+          value={this.state.title}
+          placeholder="New title here"
+          />
+        </View>
+        <Text></Text>
+        <View style={styles.btnView}>
+          <TouchableOpacity
+            style={styles.AndroidCreateBtn}
+            onPress={this.create}
+            >
+            <Text style={styles.createBtnText}>Create</Text>
+          </TouchableOpacity>
+        </View>        
       </View>
     )
   }
@@ -70,13 +75,11 @@ const styles = StyleSheet.create({
     padding: 15,
     alignItems: "center"
   },
-  iosCreateBtn: {
-    backgroundColor: purple,
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40
+  btnView:{
+    flex:2
+  },
+  textView:{
+    flex:1, alignItems: "center"
   },
   AndroidCreateBtn: {
     backgroundColor: purple,
@@ -84,15 +87,19 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
     paddingRight: 30,
     height: 45,
-    borderRadius: 2,
+    borderRadius: 25,
     justifyContent: "center",
     alignItems: "center"
   },
   createBtnText: {
     color: white,
     fontSize: 22,
-    textAlign: "center"
+    textAlign: "center",
   },
+  titleText :{
+    fontSize: 20,
+    fontFamily: 'serif'
+  }
 })
 
 export default connect()(NewDeck);
