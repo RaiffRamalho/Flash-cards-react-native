@@ -12,7 +12,7 @@ yarn install
 
 ## Run
 ```
-yarnstart
+yarn start
 ```
 Using expo it will be need to read the QR Code an the the app will open automatically
 
