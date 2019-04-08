@@ -29,15 +29,18 @@ class Score extends Component {
     const {score} = this.props.navigation.state.params
     const {questionsNum} = this.props.navigation.state.params
     return (
-      <View style={styles.container}> 
-        <Text>Score : {score} from {questionsNum} </Text>
-        <Text></Text>
-        <TouchableOpacity
-          style={ styles.AndroidBackBtn }
-          onPress={this.backToBegin}
-        >
-        <Text style={styles.btnText}>Back to Deck List</Text>
-        </TouchableOpacity>
+      <View style={styles.container}>
+        <View style={styles.textView}>
+          <Text style={styles.texts}>Score : {score} from {questionsNum} </Text>
+        </View>
+        <View style={styles.btnView}>
+          <TouchableOpacity
+            style={ styles.AndroidBackBtn }
+            onPress={this.backToBegin}
+          >
+          <Text style={styles.btnText}>Back to Deck List</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
@@ -55,7 +58,7 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
     paddingRight: 30,
     height: 45,
-    borderRadius: 2,
+    borderRadius: 25,
     justifyContent: "center",
     alignItems: "center"
   },
@@ -64,6 +67,16 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: "center"
   },
+  btnView: {
+    flex: 1
+  },
+  textView: {
+    flex: 2
+  },
+  texts:{
+    fontSize: 20,
+    fontFamily: 'serif'
+  }
   
 })
 

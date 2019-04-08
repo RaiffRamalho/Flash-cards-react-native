@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity, Platform, TextInput, Picker } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, TextInput, Picker } from 'react-native'
 import { purple, white } from '../utils/colors'
 
 import { connect } from 'react-redux'
 import { saveCardToDeck} from '../actions'
 
-import { getDecks, addCardToDeck } from '../utils/api'
+import { addCardToDeck } from '../utils/api'
 
 
 
@@ -13,7 +13,7 @@ class NewCard extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      question: 'Question',
+      question: '',
       answer: 'Yes',
       answered: 'Not yet'
     };
@@ -43,8 +43,7 @@ class NewCard extends Component {
           answered, answered
         }
       }
-    ).then(getDecks().then(result => {
-    }))
+    )
 
     this.props.navigation.navigate(
       'Deck',
@@ -54,17 +53,19 @@ class NewCard extends Component {
 
   render() {
     return (
-      <View style={styles.container}> 
-        <Text>Question</Text>
-        <TextInput
-        style={{height: 40, width:200, borderColor: 'gray', borderWidth: 1}}
-        onChangeText={(question) => this.setState({question})}
-        value={this.state.question}
-        />
-        <Text></Text>
-        <Text>Answer</Text>
-        <View>
+      <View style={styles.container}>
+        <View style={styles.firstView}>
+          <Text style={styles.texts}>Question</Text>
+          <TextInput
+          style={{height: 40, width:200, borderColor: 'gray', borderWidth: 1}}
+          onChangeText={(question) => this.setState({question})}
+          value={this.state.question}
+          placeholder="New question here"
+          />
+        </View>
 
+        <View style={styles.secondView}>
+          <Text style={styles.texts}>Answer</Text>
           <Picker
             selectedValue={this.state.answer}
             style={{height: 60, width: 100}}
@@ -75,16 +76,15 @@ class NewCard extends Component {
             <Picker.Item key="No" label="No" value="No" />
           </Picker>
         </View>
-        <Text></Text>       
-        <TouchableOpacity
-          style={
-            Platform.OS === "ios" ? styles.iosCreateBtn : styles.AndroidCreateBtn
-          }
-          onPress={this.create}
-        >
-          <Text style={styles.createBtnText}>Create</Text>
-        </TouchableOpacity>
-      
+
+        <View style={styles.thirdView}>
+          <TouchableOpacity
+            style={styles.AndroidCreateBtn}
+            onPress={this.create}
+            >
+            <Text style={styles.createBtnText}>Create</Text>
+          </TouchableOpacity>
+        </View>      
       </View>
     )
   }
@@ -94,22 +94,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 15,
-    alignItems: "center"
-  },iosCreateBtn: {
-    backgroundColor: purple,
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40
+    alignItems: "center",
   },
   AndroidCreateBtn: {
     backgroundColor: purple,
     padding: 10,
     paddingLeft: 30,
     paddingRight: 30,
-    height: 45,
-    borderRadius: 2,
+    height: 55,
+    borderRadius: 25,
     justifyContent: "center",
     alignItems: "center"
   },
@@ -118,6 +111,20 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: "center"
   },
+  texts :{
+    fontSize: 20,
+    fontFamily: 'serif'
+  },
+  firstView: {
+    flex: 1,
+    alignItems: "center"
+  },
+  secondView: {
+    flex: 1
+  },
+  thirdView: {
+    flex: 1
+  }
   
 })
 

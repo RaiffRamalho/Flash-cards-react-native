@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity, Platform } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { purple, white } from '../utils/colors'
 
 import { connect } from 'react-redux'
@@ -26,9 +26,7 @@ class Deck extends Component {
 
         <View style={styles.btn1View}>
           <TouchableOpacity
-              style={
-                Platform.OS === "ios" ? styles.iosBtn : styles.AndroidBtn
-              }
+              style={styles.AndroidBtn}
               onPress={() => this.props.navigation.navigate(
                 'Quiz',
                 {deck: deck}
@@ -76,7 +74,9 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   textView: {
-    flex: 1
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: "center"
   },
   btn1View: {
     flex: 1

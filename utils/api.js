@@ -59,8 +59,6 @@ export function saveUserAnswer ({ key, indexOfCurrentQuestion, userAnswer }){
 
     let data = JSON.parse(results)[key]
     data.questions[indexOfCurrentQuestion].answered = userAnswer
-    // console.log("api data", data)
-
     return AsyncStorage.setItem(FLASH_CARDS_STORAGE_KEY, JSON.stringify({[key]:data}))
   
   })

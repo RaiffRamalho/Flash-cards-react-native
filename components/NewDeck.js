@@ -5,8 +5,7 @@ import {
   StyleSheet, 
   Text, 
   TextInput, 
-  TouchableOpacity, 
-  Platform } from 'react-native'
+  TouchableOpacity } from 'react-native'
 import { purple, white } from '../utils/colors'
 import { saveDeckTitle } from '../utils/api'
 
@@ -44,8 +43,6 @@ class NewDeck extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <View style={{flex:1}}>
-        </View> */}
         <View style={styles.textView}>
           <Text style={styles.titleText}>Title</Text>
           <TextInput

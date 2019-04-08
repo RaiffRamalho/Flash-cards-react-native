@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { 
   View, 
   StyleSheet, 
-  Text,
-  Platform, 
+  Text, 
   FlatList, 
   TouchableOpacity } from 'react-native'
 import { lightPurp, purple, white } from '../utils/colors'
@@ -54,7 +53,6 @@ class DeckList extends Component {
             { keyID : item.title }
             )}
             >
-            
             <View style={styles.item}> 
               <Text style={styles.titleText}>{item.title}</Text>
               <Text style={styles.titleText}>{item.questions.length} Cards</Text>
@@ -64,9 +62,7 @@ class DeckList extends Component {
         />
       
         <TouchableOpacity
-          style={
-            Platform.OS === "ios" ? styles.iosCleanBtn : styles.AndroidCleanBtn
-          }
+          style={styles.AndroidCleanBtn}
           onPress={this.cleanStorage}
         >
           <Text style={styles.cleanBtnText}>Clean</Text>
