@@ -1,4 +1,4 @@
-# Readable Project
+# Flash-Cards Project
 This is the final project in the React NanoDegree Course of Udacity called Mobile FlashCards project
 The FlashCards project its a mobile app. Users will be able to create quiz using flash cards to play and study.
 Its posstible create quizes of a determined subject, and the next step is create cards for the quiz.
